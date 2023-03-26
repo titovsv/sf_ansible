@@ -1,0 +1,36 @@
+---
+- name: Mysql install
+  hosts: localhost
+  gather_facts: true
+  become: true
+
+  tasks:
+#    - name: Download mysql deb repository file
+#      get_url:
+#        url: https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
+#        dest: /tmp/mysql_repo.deb
+#        mode: 'u+rwx'
+
+    - name: Install a .deb package mysql reposytory
+      apt:
+        deb: /tmp/mysql_repo.deb
+
+    - name: Apt update
+      apt:
+        update_cache: true
+
+    - name: Installing Mysql  and dependencies
+      package:
+       name: "{{ pkgs }}"
+       state: present
+       update_cache: yes
+      vars:
+        pkgs:
+          - mysql-server
+          - mysql-client
+
+    - name: Enable mysql-server and start
+      service:
+        name: mysql
+        state: started
+        enabled: yes
