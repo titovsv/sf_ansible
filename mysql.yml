@@ -5,11 +5,11 @@
   become: true
 
   tasks:
-#    - name: Download mysql deb repository file
-#      get_url:
-#        url: https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
-#        dest: /tmp/mysql_repo.deb
-#        mode: 'u+rwx'
+    - name: Download mysql deb repository file
+      get_url:
+        url: https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
+        dest: /tmp/mysql_repo.deb
+        mode: 'u+rwx'
 
     - name: Install a .deb package mysql reposytory
       apt:
