@@ -1,0 +1,28 @@
+---
+- name: Install/Remove postfix
+  hosts: test
+  gather_facts: no
+  become: yes
+  tasks:
+  - name: Install postfix
+    apt:
+      name: postfix
+      state: latest
+      update_cache: yes
+    notify:
+      - Restart postfix
+    tags: "init postfix"
+
+  - name: Remove postfix
+    apt:
+      name: postfix
+      state: absent
+      update_cache: yes
+    tags: "drop postfix"
+
+  handlers:
+    - name: Restart postfix
+      service:
+        name: postfix
+        state: restarted
+      

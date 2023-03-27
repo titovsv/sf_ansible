@@ -1,0 +1,26 @@
+---
+- name: Create user
+  hosts: test
+  gather_facts: no
+  become: yes
+  tasks:
+  - name: create user1
+    user:
+      name: user1
+
+  - name: create .ssh directory
+    file:
+      path: /home/user1/.ssh
+      owner: user1
+      group: user1
+      state: directory
+      mode: 0700
+
+  - name: copy id_rsa.pub to user1
+    copy:
+      src: /ansible/files/key.pub
+      dest: /home/user1/.ssh/id_rsa.pub
+      local_follow: yes
+      mode: 0600
+        
+      
